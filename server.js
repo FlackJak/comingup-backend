@@ -3,6 +3,7 @@ const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const typeDefs = require('./schema');
@@ -11,7 +12,8 @@ const User = require('./models/User');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+// Use body-parser middleware explicitly before Apollo middleware
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/comingup', {
   useNewUrlParser: true,
